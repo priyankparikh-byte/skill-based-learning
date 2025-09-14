@@ -2,20 +2,49 @@
 class ThemeManager {
     constructor() {
         this.themeToggle = document.getElementById('theme-toggle');
-        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.currentTheme = this.getInitialTheme();
         this.init();
+    }
+
+    getInitialTheme() {
+        // Check localStorage first
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            return savedTheme;
+        }
+        
+        // Check system preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            return 'dark';
+        }
+        
+        // Default to light
+        return 'light';
     }
 
     init() {
         this.setTheme(this.currentTheme);
         this.themeToggle?.addEventListener('click', () => this.toggleTheme());
+        
+        // Listen for system theme changes
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('theme')) {
+                    this.setTheme(e.matches ? 'dark' : 'light');
+                }
+            });
+        }
     }
 
     setTheme(theme) {
-        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.setAttribute('data-color-scheme', theme);
         localStorage.setItem('theme', theme);
         this.currentTheme = theme;
         this.updateThemeIcon();
+        
+        // Update body class for additional styling if needed
+        document.body.className = document.body.className.replace(/theme-\w+/g, '');
+        document.body.classList.add(`theme-${theme}`);
     }
 
     toggleTheme() {
@@ -26,7 +55,9 @@ class ThemeManager {
     updateThemeIcon() {
         if (this.themeToggle) {
             const icon = this.themeToggle.querySelector('i');
-            icon.className = this.currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            if (icon) {
+                icon.className = this.currentTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            }
         }
     }
 }
@@ -564,7 +595,7 @@ style.textContent = `
         box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     }
 
-    [data-theme="dark"] .navbar.scrolled {
+    [data-color-scheme="dark"] .navbar.scrolled {
         background: rgba(15, 23, 42, 0.95) !important;
     }
 
