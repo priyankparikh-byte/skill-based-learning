@@ -293,6 +293,9 @@ class AnimationManager {
         this.setupIntersectionObserver();
         this.setupScrollAnimations();
         this.setupCounterAnimations();
+        this.setupTextReveal();
+        this.setupStaggeredAnimations();
+        this.setupPageLoadAnimation();
     }
 
     setupIntersectionObserver() {
@@ -300,6 +303,7 @@ class AnimationManager {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate');
+                    entry.target.classList.add('animated');
                 }
             });
         }, this.observerOptions);
@@ -312,19 +316,22 @@ class AnimationManager {
             .blog-card,
             .instructor-card,
             .value-card,
-            .diff-item
+            .diff-item,
+            .animate-on-scroll
         `);
 
         animatedElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
+            if (!el.classList.contains('animate-on-scroll')) {
+                el.classList.add('animate-on-scroll');
+            }
             observer.observe(el);
         });
     }
 
     setupScrollAnimations() {
-        window.addEventListener('scroll', () => {
+        let ticking = false;
+        
+        const updateParallax = () => {
             const scrolled = window.pageYOffset;
             const parallaxElements = document.querySelectorAll('.parallax');
             
@@ -333,11 +340,20 @@ class AnimationManager {
                 const yPos = -(scrolled * speed);
                 element.style.transform = `translateY(${yPos}px)`;
             });
+            
+            ticking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
         });
     }
 
     setupCounterAnimations() {
-        const counters = document.querySelectorAll('.stat h3, .impact-stat h3');
+        const counters = document.querySelectorAll('.stat h3, .impact-stat h3, .stat-number');
         const counterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -355,6 +371,9 @@ class AnimationManager {
         const suffix = element.textContent.replace(/[0-9]/g, '');
         let current = 0;
         const increment = target / 100;
+        const duration = 2000; // 2 seconds
+        const stepTime = duration / 100;
+        
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
@@ -363,7 +382,52 @@ class AnimationManager {
             } else {
                 element.textContent = Math.floor(current) + suffix;
             }
-        }, 20);
+        }, stepTime);
+    }
+
+    setupTextReveal() {
+        const textElements = document.querySelectorAll('.text-reveal');
+        const textObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        });
+
+        textElements.forEach(el => {
+            const text = el.textContent;
+            el.innerHTML = text.split('').map(char => 
+                char === ' ' ? ' ' : `<span>${char}</span>`
+            ).join('');
+            textObserver.observe(el);
+        });
+    }
+
+    setupStaggeredAnimations() {
+        const staggeredElements = document.querySelectorAll('.stagger-animation');
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const children = entry.target.children;
+                    Array.from(children).forEach((child, index) => {
+                        setTimeout(() => {
+                            child.classList.add('animated');
+                        }, index * 100);
+                    });
+                }
+            });
+        });
+
+        staggeredElements.forEach(el => staggerObserver.observe(el));
+    }
+
+    setupPageLoadAnimation() {
+        // Add page load animation to main content
+        const mainContent = document.querySelector('main, .container');
+        if (mainContent) {
+            mainContent.classList.add('page-load');
+        }
     }
 }
 
@@ -510,6 +574,163 @@ class EnrollmentManager {
     }
 }
 
+// Toast Notification System
+class ToastManager {
+    constructor() {
+        this.toastContainer = this.createToastContainer();
+    }
+
+    createToastContainer() {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 10000;
+                pointer-events: none;
+            `;
+            document.body.appendChild(container);
+        }
+        return container;
+    }
+
+    show(message, type = 'info', duration = 5000) {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fas ${this.getIcon(type)}"></i>
+                <span>${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: inherit; cursor: pointer; margin-left: auto;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        this.toastContainer.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Auto remove
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, duration);
+    }
+
+    getIcon(type) {
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            warning: 'fa-exclamation-triangle',
+            info: 'fa-info-circle'
+        };
+        return icons[type] || icons.info;
+    }
+}
+
+// Enhanced Interactions Manager
+class InteractionManager {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        this.setupRippleEffect();
+        this.setupHoverEffects();
+        this.setupClickEffects();
+        this.setupKeyboardNavigation();
+    }
+
+    setupRippleEffect() {
+        document.addEventListener('click', (e) => {
+            const button = e.target.closest('.btn, .card, .nav-link');
+            if (button) {
+                this.createRipple(e, button);
+            }
+        });
+    }
+
+    createRipple(event, element) {
+        const ripple = document.createElement('span');
+        const rect = element.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+            z-index: 1;
+        `;
+        
+        element.style.position = 'relative';
+        element.style.overflow = 'hidden';
+        element.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+    }
+
+    setupHoverEffects() {
+        // Add magnetic effect to buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                btn.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+            });
+            
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+            });
+        });
+    }
+
+    setupClickEffects() {
+        // Add click feedback to interactive elements
+        document.querySelectorAll('.btn, .card, .nav-link').forEach(element => {
+            element.addEventListener('mousedown', () => {
+                element.style.transform = 'scale(0.98)';
+            });
+            
+            element.addEventListener('mouseup', () => {
+                element.style.transform = '';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = '';
+            });
+        });
+    }
+
+    setupKeyboardNavigation() {
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                document.body.classList.add('keyboard-navigation');
+            }
+        });
+        
+        document.addEventListener('mousedown', () => {
+            document.body.classList.remove('keyboard-navigation');
+        });
+    }
+}
+
 // Smooth Scrolling
 class SmoothScrollManager {
     constructor() {
@@ -584,6 +805,13 @@ style.textContent = `
         }
     }
 
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+
     .animate {
         opacity: 1 !important;
         transform: translateY(0) !important;
@@ -614,6 +842,26 @@ style.textContent = `
     .hamburger.active .bar:nth-child(3) {
         transform: translateY(-8px) rotate(-45deg);
     }
+
+    /* Keyboard navigation styles */
+    .keyboard-navigation *:focus {
+        outline: 2px solid var(--color-primary) !important;
+        outline-offset: 2px !important;
+    }
+
+    /* Loading states */
+    .loading {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    /* Enhanced focus states */
+    .btn:focus-visible,
+    .nav-link:focus-visible,
+    .card:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+    }
 `;
 document.head.appendChild(style);
 
@@ -628,7 +876,142 @@ document.addEventListener('DOMContentLoaded', () => {
     new LoadMoreManager();
     new EnrollmentManager();
     new SmoothScrollManager();
+    new ToastManager();
+    new InteractionManager();
+    new ChatBubbleManager();
+    
+    // Add page load animation
+    document.body.classList.add('page-load');
+    
+    // Show welcome toast
+    setTimeout(() => {
+        if (window.toastManager) {
+            window.toastManager.show('Welcome to SkillForge! 🎉', 'success', 3000);
+        }
+    }, 1000);
 });
+
+// Chat Bubble Management
+class ChatBubbleManager {
+    constructor() {
+        this.chatOpenBtn = document.getElementById('chat-open-btn');
+        this.chatBubble = document.getElementById('chat-bubble');
+        this.chatCloseBtn = document.getElementById('chat-close-btn');
+        this.chatForm = document.getElementById('chat-form');
+        this.chatInput = document.getElementById('chat-input');
+        this.chatMessages = document.getElementById('chat-messages');
+        this.isOpen = false;
+        this.init();
+    }
+
+    init() {
+        this.chatOpenBtn?.addEventListener('click', () => this.toggleChat());
+        this.chatCloseBtn?.addEventListener('click', () => this.closeChat());
+        this.chatForm?.addEventListener('submit', (e) => this.handleSubmit(e));
+        
+        // Close chat when clicking outside
+        document.addEventListener('click', (e) => {
+            if (this.isOpen && !this.chatBubble.contains(e.target) && !this.chatOpenBtn.contains(e.target)) {
+                this.closeChat();
+            }
+        });
+
+        // Handle Enter key in input
+        this.chatInput?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                this.handleSubmit(e);
+            }
+        });
+    }
+
+    toggleChat() {
+        if (this.isOpen) {
+            this.closeChat();
+        } else {
+            this.openChat();
+        }
+    }
+
+    openChat() {
+        this.chatBubble?.classList.remove('chat-bubble-closed');
+        this.isOpen = true;
+        this.chatInput?.focus();
+        
+        // Update button icon
+        const icon = this.chatOpenBtn?.querySelector('i');
+        if (icon) {
+            icon.className = 'fas fa-times';
+        }
+    }
+
+    closeChat() {
+        this.chatBubble?.classList.add('chat-bubble-closed');
+        this.isOpen = false;
+        
+        // Update button icon
+        const icon = this.chatOpenBtn?.querySelector('i');
+        if (icon) {
+            icon.className = 'fas fa-comments';
+        }
+    }
+
+    async handleSubmit(e) {
+        e.preventDefault();
+        const message = this.chatInput?.value.trim();
+        if (!message) return;
+
+        // Add user message
+        this.addMessage(message, 'user');
+        this.chatInput.value = '';
+
+        // Show typing indicator
+        const typingMsg = this.addMessage('Typing...', 'bot');
+        typingMsg.classList.add('typing');
+
+        try {
+            const response = await fetch('http://localhost:3000/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message })
+            });
+
+            const data = await response.json();
+            
+            // Remove typing indicator
+            typingMsg.remove();
+            
+            // Add bot response
+            this.addMessage(data.reply, 'bot');
+        } catch (error) {
+            console.error('Error:', error);
+            typingMsg.remove();
+            this.addMessage('⚠ Error connecting to server. Please try again.', 'bot');
+        }
+    }
+
+    addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', `${sender}-message`);
+        messageDiv.textContent = text;
+        
+        this.chatMessages?.appendChild(messageDiv);
+        this.scrollToBottom();
+        
+        return messageDiv;
+    }
+
+    scrollToBottom() {
+        if (this.chatMessages) {
+            this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
+        }
+    }
+}
+
+// Make toast manager globally available
+window.toastManager = new ToastManager();
 
 // Handle page visibility changes
 document.addEventListener('visibilitychange', () => {

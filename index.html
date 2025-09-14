@@ -86,48 +86,48 @@
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="container">
-            <div class="section-header">
-                <h2>Why Choose SkillForge?</h2>
+            <div class="section-header animate-on-scroll">
+                <h2 class="text-reveal">Why Choose SkillForge?</h2>
                 <p>We provide world-class education with real-world applications</p>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
+            <div class="features-grid stagger-animation">
+                <div class="feature-card animate-on-scroll stagger-1">
+                    <div class="feature-icon glow-on-hover">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </div>
                     <h3>Expert Instructors</h3>
                     <p>Learn from industry professionals with years of real-world experience</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card animate-on-scroll stagger-2">
+                    <div class="feature-icon glow-on-hover">
                         <i class="fas fa-project-diagram"></i>
                     </div>
                     <h3>Hands-on Projects</h3>
                     <p>Build real projects that showcase your skills to potential employers</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card animate-on-scroll stagger-3">
+                    <div class="feature-icon glow-on-hover">
                         <i class="fas fa-certificate"></i>
                     </div>
                     <h3>Industry Certificates</h3>
                     <p>Earn recognized certifications that boost your career prospects</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card animate-on-scroll stagger-4">
+                    <div class="feature-icon glow-on-hover">
                         <i class="fas fa-users"></i>
                     </div>
                     <h3>Community Support</h3>
                     <p>Join a vibrant community of learners and get help when you need it</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card animate-on-scroll stagger-5">
+                    <div class="feature-icon glow-on-hover">
                         <i class="fas fa-clock"></i>
                     </div>
                     <h3>Flexible Learning</h3>
                     <p>Study at your own pace with lifetime access to course materials</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
+                <div class="feature-card animate-on-scroll stagger-6">
+                    <div class="feature-icon glow-on-hover">
                         <i class="fas fa-briefcase"></i>
                     </div>
                     <h3>Career Support</h3>
@@ -345,6 +345,31 @@
             </div>
         </div>
     </footer>
+
+    <!-- Chat Bubble -->
+    <button class="chat-open-btn" id="chat-open-btn">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <div id="chat-bubble" class="chat-bubble-closed">
+        <div id="chat-header">
+            <span>Study Assistant</span>
+            <button id="chat-close-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="chat-message bot-message">
+                Hello! I'm your study assistant assistant. How can I help you today?
+            </div>
+        </div>
+        <form class="chat-form" id="chat-form">
+            <input type="text" id="chat-input" placeholder="Ask me anything about health..." autocomplete="off">
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
 
     <script src="script.js"></script>
 </body>
