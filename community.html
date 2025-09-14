@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Community & Projects - SkillForge Growth Hub</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <h2><i class="fas fa-graduation-cap"></i> SkillForge</h2>
+      </div>
+      <div class="nav-menu" id="nav-menu">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="courses.html" class="nav-link">Courses</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="instructors.html" class="nav-link">Instructors</a>
+        <a href="blog.html" class="nav-link">Blog</a>
+        <a href="community.html" class="nav-link active">Community</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+        <button class="theme-toggle" id="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" style="padding: 140px 20px 80px;">
+    <div class="hero-container" style="max-width: 900px; margin: 0 auto; text-align: center;">
+      <h1 class="hero-title">Join the SkillForge Community & Showcase Your Projects</h1>
+      <p class="hero-description" style="color: var(--text-light); font-size: 1.2rem; max-width: 650px; margin: 1rem auto;">
+        Collaborate with fellow learners, share your projects, and participate in exciting challenges to boost your skills and career.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="projects-section" style="padding: 60px 20px; background: var(--bg-light);">
+    <div class="container">
+      <div class="section-header">
+        <h2>Community Projects</h2>
+        <p>Explore featured projects built by our learners. Get inspired and contribute to open challenges.</p>
+      </div>
+      <div class="projects-grid" style="display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 2rem;">
+        <!-- Project Card 1 -->
+        <div class="project-card" style="background: var(--bg-color); border-radius: 12px; box-shadow: var(--shadow); padding: 1rem;">
+          <div style="height: 180px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+            Project Image
+          </div>
+          <h3 style="margin-top: 1rem;">Personal Portfolio Website</h3>
+          <p>Responsive portfolio built with HTML, CSS, and JavaScript showcasing developer skills and projects.</p>
+          <div style="margin-top: 1rem;">
+            <label for="progress1">Progress:</label>
+            <progress id="progress1" value="80" max="100" style="width: 100%; border-radius: 10px;"></progress>
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="project-card" style="background: var(--bg-color); border-radius: 12px; box-shadow: var(--shadow); padding: 1rem;">
+          <div style="height: 180px; background: var(--gradient-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+            Project Image
+          </div>
+          <h3 style="margin-top: 1rem;">AI Chatbot</h3>
+          <p>Interactive chatbot powered by machine learning APIs to assist with customer queries and FAQs.</p>
+          <div style="margin-top: 1rem;">
+            <label for="progress2">Progress:</label>
+            <progress id="progress2" value="65" max="100" style="width: 100%; border-radius: 10px;"></progress>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="project-card" style="background: var(--bg-color); border-radius: 12px; box-shadow: var(--shadow); padding: 1rem;">
+          <div style="height: 180px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+            Project Image
+          </div>
+          <h3 style="margin-top: 1rem;">E-Commerce Store</h3>
+          <p>Full-stack e-commerce website featuring product listings, cart, and payment gateway integration.</p>
+          <div style="margin-top: 1rem;">
+            <label for="progress3">Progress:</label>
+            <progress id="progress3" value="90" max="100" style="width: 100%; border-radius: 10px;"></progress>
+          </div>
+        </div>
+
+        <!-- Project Card 4 -->
+        <div class="project-card" style="background: var(--bg-color); border-radius: 12px; box-shadow: var(--shadow); padding: 1rem;">
+          <div style="height: 180px; background: var(--gradient-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+            Project Image
+          </div>
+          <h3 style="margin-top: 1rem;">Data Dashboard</h3>
+          <p>Dynamic dashboard visualizing complex business metrics with interactive charts and filters.</p>
+          <div style="margin-top: 1rem;">
+            <label for="progress4">Progress:</label>
+            <progress id="progress4" value="50" max="100" style="width: 100%; border-radius: 10px;"></progress>
+          </div>
+        </div>
+
+        <!-- Project Card 5 -->
+        <div class="project-card" style="background: var(--bg-color); border-radius: 12px; box-shadow: var(--shadow); padding: 1rem;">
+          <div style="height: 180px; background: var(--gradient-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+            Project Image
+          </div>
+          <h3 style="margin-top: 1rem;">Mobile Fitness App</h3>
+          <p>Cross-platform mobile app tracking workouts, nutrition, and progress with social sharing features.</p>
+          <div style="margin-top: 1rem;">
+            <label for="progress5">Progress:</label>
+            <progress id="progress5" value="75" max="100" style="width: 100%; border-radius: 10px;"></progress>
+          </div>
+        </div>
+
+        <!-- Project Card 6 -->
+        <div class="project-card" style="background: var(--bg-color); border-radius: 12px; box-shadow: var(--shadow); padding: 1rem;">
+          <div style="height: 180px; background: var(--gradient-secondary); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1.2rem;">
+            Project Image
+          </div>
+          <h3 style="margin-top: 1rem;">Game Development</h3>
+          <p>Interactive 2D game created with JavaScript canvas and physics engine for engaging gameplay.</p>
+          <div style="margin-top: 1rem;">
+            <label for="progress6">Progress:</label>
+            <progress id="progress6" value="40" max="100" style="width: 100%; border-radius: 10px;"></progress>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section class="community-section" style="padding: 60px 20px;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Community Features</h2>
+        <p>Engage with fellow learners through forums, events, and live chat.</p>
+      </div>
+      <div class="community-grid" style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+        <!-- Left: Forums & Chat -->
+        <div>
+          <div class="forum-preview" style="margin-bottom: 2rem;">
+            <h3>Forum Topics</h3>
+            <ul style="list-style: none; padding-left: 0;">
+              <li><a href="#" style="text-decoration: none; color: var(--primary-color);">How to start full-stack development?</a> <small style="color: var(--text-light);">(23 replies)</small></li>
+              <li><a href="#" style="text-decoration: none; color: var(--primary-color);">Best resources for AI beginners</a> <small style="color: var(--text-light);">(17 replies)</small></li>
+              <li><a href="#" style="text-decoration: none; color: var(--primary-color);">Project collaboration requests</a> <small style="color: var(--text-light);">(30 replies)</small></li>
+              <li><a href="#" style="text-decoration: none; color: var(--primary-color);">Job interview tips and tricks</a> <small style="color: var(--text-light);">(12 replies)</small></li>
+            </ul>
+          </div>
+
+          <div class="chat-widget" style="border: 1px solid var(--border-color); border-radius: 12px; padding: 1rem; background: var(--bg-light); height: 320px;">
+            <h3>Live Chat</h3>
+            <p style="color: var(--text-light); margin-top: 1rem;">Chat feature coming soon! Connect with fellow learners and mentors in real-time.</p>
+          </div>
+        </div>
+
+        <!-- Right: Events -->
+        <div class="community-events" style="background: var(--bg-light); padding: 1rem; border-radius: 12px;">
+          <h3>Upcoming Events</h3>
+          <ul style="list-style: none; padding-left: 0;">
+            <li>
+              <strong>Monthly Hackathon</strong><br />
+              <small>Sep 30, 2025</small><br />
+              Build projects in teams to win prizes and gain mentorship.
+            </li>
+            <hr />
+            <li>
+              <strong>AI Webinar Series</strong><br />
+              <small>Oct 10, 2025</small><br />
+              Live sessions with industry experts on AI trends and careers.
+            </li>
+            <hr />
+            <li>
+              <strong>Networking Meetup</strong><br />
+              <small>Oct 22, 2025</small><br />
+              Connect with professionals and peers to expand your network.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem;">
+        <div class="footer-section">
+          <h3><i class="fas fa-graduation-cap"></i> SkillForge</h3>
+          <p>Empowering professionals worldwide with cutting-edge skills and knowledge for the digital age.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Courses</h4>
+          <ul>
+            <li><a href="courses.html">Web Development</a></li>
+            <li><a href="courses.html">Data Science</a></li>
+            <li><a href="courses.html">Mobile Development</a></li>
+            <li><a href="courses.html">AI & Machine Learning</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="instructors.html">Our Team</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Student Portal</a></li>
+            <li><a href="#">Career Services</a></li>
+            <li><a href="#">Community</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom" style="text-align: center; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-light);">
+        <p>&copy; 2025 SkillForge Growth Hub. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
